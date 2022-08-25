@@ -1,14 +1,20 @@
-local player = game.Players.LocalPlayer
-local cam = game.Workspace.CurrentCamera
+--= Module Initialiser by Danael_21 X StarShadow64 =--
 
-wait(2)
-local CP = game.Workspace:FindFirstChild("CamPart")
-if CP then
-    repeat
-        cam.CameraType = Enum.CameraType.Scriptable
-    until cam.CameraType == Enum.CameraType.Scriptable
-    cam.CFrame = CP.CFrame
+wait(0.5)
+local ServerScriptService = game:GetService("ServerScriptService")
+local d = false
 
-    player.Character.HumanoidRootPart.CFrame = CP.CFrame + Vector3.new(0,5,0)
-    player.Character.HumanoidRootPart.Anchored = true
+function RunModules()
+    local ModuleF = Instance.new("Folder")
+    ModuleF.Parent = ServerScriptService
+    ModuleF.Name = "ModuleFolder"
+    for _, modules in pairs(script:GetChildren()) do
+        if modules:IsA("ModuleScript") then
+            modules.Parent = ModuleF
+            require(modules)()
+        end
+    end
 end
+
+print("Starting clients modules")
+RunModules()
